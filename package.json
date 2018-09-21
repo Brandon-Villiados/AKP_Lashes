@@ -1,0 +1,41 @@
+{
+  "name": "AKP_Lashes.com",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "react-dev": "webpack -d --watch",
+    "server-dev": "nodemon server/index.js"
+  },
+  "keywords": [],
+  "author": "Brandon Villiados",
+  "license": "ISC",
+  "dependencies": {
+    "animate.css": "^3.7.0",
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "jquery": "^3.3.1",
+    "nodemon": "^1.17.3",
+    "path": "^0.12.7",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-materialize": "^2.4.5",
+    "react-modal": "^3.4.4",
+    "react-router": "^4.2.0"
+  },
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "webpack": "^4.6.0",
+    "webpack-cli": "^2.1.2"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  }
+}
