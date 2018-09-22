@@ -1,4 +1,35 @@
-* { 
+*{ 
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body{
+  background-color: #fff;
+}
+
+h5{
+  font-family: 'Playfair Display', serif;
+}
+
+h3{
+  font-family: 'Playfair Display', serif;
+  margin: auto;
+}
+
+
+.NavButton a{
+  font-family: 'Quicksand', sans-serif;
+  text-decoration: none;
+  color: #000;
+  margin: auto;
+}
+
+.NavButton a:hover{
+  color: #fde79b;
+}
+
+/* * { 
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
@@ -246,4 +277,5 @@ grid-column: 1 / 2;
 
 
 
+ */
 
