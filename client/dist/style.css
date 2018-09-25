@@ -9,12 +9,16 @@ body{
 }
 
 h5{
-  font-family: 'Playfair Display', serif;
+  font-family: 'Quicksand', sans-serif;
 }
 
 h3{
-  font-family: 'Playfair Display', serif;
+  font-family: 'Quicksand', sans-serif;
   margin: auto;
+}
+
+h1 {
+  font-family: 'Quicksand', sans-serif;
 }
 
 
