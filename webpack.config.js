@@ -10,15 +10,24 @@ module.exports = {
   },
   module : {
     rules: [
-        {
+      {
         test : /\.jsx?/,
         include : SRC_DIR,
         loader : 'babel-loader',      
         query: {
           presets: ['react', 'es2015']
         }
+      },
+      {
+        test: /\.css$/,
+        use: [ 'style-loader', 'css-loader' ]
       }
     ]
+  },
+  resolve: {
+    alias: {
+      gcalCredentials: path.resolve(__dirname, '/credentials.json')
+    }
   }
 
 };

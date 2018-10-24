@@ -5,13 +5,15 @@ const ContactWrapper = styled.div`
   width: 100%;
   height: auto;
   grid-row: 3;
-  margin-top: .5em;
+  margin-top: .7em;
   background-color: #a3d9d9;
   opacity: .9;
   border-radius: 2px;
+  filter: drop-shadow(0 0 1px #727272);
 
   h3{
-    margin-top: .5em
+    margin-top: .5em;
+    font-family: 'Quicksand', sans-serif;
   }
 
   h5 {

@@ -5,6 +5,13 @@ import Buttons from './body_components/Buttons.jsx';
 import Nav from './header_components/Navbar.jsx'; 
 import MainContent from './body_components/MainContent.jsx';
 import SubContent from './body_components/SubContent.jsx';
+import ComingSoon from './helper_components/ComingSoon.jsx';
+import BookForm from './body_components/BookOnline.jsx';
+import {
+  Route,
+  NavLink,
+  BrowserRouter as Router
+} from 'react-router-dom';
 
 const Container = styled.div`
   width: 375px;
@@ -43,13 +50,18 @@ export default class App extends Component {
 
   render() {
     return (
-      <Container>
-        <Nav/>
-        <MainContent/>
-        <Wipedbg>
-          <SubContent/>
-        </Wipedbg>
-      </Container>
+      <Router>
+        <Container>
+          <Nav/>
+          <Route exact path='/' component={MainContent}/>
+          <Route path='/services' component={ComingSoon}/>
+          <Route path='/portfolio' component={ComingSoon}/>
+          <Route path='/book_online' component={BookForm}/>
+          <Wipedbg>
+            <SubContent/>
+          </Wipedbg>
+        </Container>
+      </Router>
     );
   }
 };

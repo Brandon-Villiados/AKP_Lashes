@@ -4,34 +4,39 @@ import styled from 'styled-components';
 const MainWrapper = styled.div`
   grid-row: 2;
   width: 100%;
-  height: 95%;
+  height: 100%;
   justify-content: center;
   text-align: center;
   z-index: 10;
+
+  h1, h5 {
+    font-family: 'Quicksand', sans-serif;
+  }
 `;
 
 const Header = styled.h5`
-  margin: 1.5em auto 0;
+  margin: 1em auto .5em;
   color: rgb(92, 92, 92);
   outline-style: solid #000;
+  font-family: 'Quicksand', sans-serif;
 `;
 
 const MainPhoto = styled.img`
-  width: 90%;
+  width: 100%;
   height: auto;
-  margin: 1.5em 1em;
-  filter: drop-shadow(0 0 2px #727272);
+  margin-bottom: .5em;
+  filter: drop-shadow(0 0 1px #727272);
   border-radius: 2px;
 `;
 
 const Section = styled.div`
   width: 100vw;
-  height: 51%;
+  height: 52%;
   background-color: #FBB5C6;
   justify-content: center;
   border-radius: 2px;
   z-index: 50;
-  /* filter: drop-shadow(0px -2px 2px #727272); */
+  filter: drop-shadow(0 0 1px #727272);
 
   h1 {
     padding-top: .5em;
@@ -45,19 +50,20 @@ const Section = styled.div`
 const VoluminousLash = styled.img`
   width: 100%;
   height: auto;
-  margin: 1em auto 0;
+  margin: 1em auto .1em;
   border-radius: 2px;
   filter: drop-shadow(0 0 1px #727272);
 `;
 
-const LearnBtn = styled.div`
+const LearnBtn = styled.button`
   width: 33%;
   height: auto;
-  margin: 0.4em auto;
-  border-style: solid;
-  border-width: thin;
-  border-color: #fff;
+  margin: 1em auto;
   border-radius: 15px;
+  border-color: #fff;
+  background-color: #ff961d;
+  border: none;
+  font-size: 1em;
 
   h5 {
     margin: auto;

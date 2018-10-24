@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import {
+  Route,
+  NavLink,
+  HashRouter
+} from 'react-router-dom';
 
 const NavWrapper = styled.div`
   grid-row: 1;
@@ -16,6 +21,17 @@ const Nav = styled.div`
   'logo'
   'line'
   'navButtons';
+
+  a {
+    font-family: 'Quicksand', sans-serif;
+    text-decoration: none;
+    color: #000;
+    margin: auto;
+  }
+
+  a:hover{
+    color: #ff961d;
+  }
 `;
 
 const Logo = styled.img`
@@ -52,9 +68,10 @@ export default class NavBar extends Component {
           <Logo src='Nav_Logo.jpg' alt='Nav_Logo.jpg'/>
           <Line/>
           <NavButton className="NavButton">
-            <a href="">Services</a>
-            <a href="">Book Online</a>
-            <a href="">Portfolio</a>
+            <NavLink to="/">Home</NavLink>
+            <NavLink to="/services">Services</NavLink>
+            <NavLink to="/book_online">Book Online</NavLink>
+            <NavLink to="/portfolio">Portfolio</NavLink>
           </NavButton>
         </Nav>
       </NavWrapper>
