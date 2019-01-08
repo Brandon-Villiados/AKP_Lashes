@@ -15,7 +15,7 @@ const Card = styled.div`
   }
 
   h1 {
-    padding: .25em ;
+    padding: .25em;
   }
 `;
 
@@ -29,7 +29,7 @@ const AppointmentCard = ({ availability, handleModal }) => {
     <CardWrapper>
      { availability.map((appointment, key) => {
        return (
-        <Card key={key} onClick={(e) => handleModal(e)}>
+        <Card key={key} onClick={handleModal}>
           <h1 id={appointment}>{appointment}</h1>
         </Card>
        )}) }

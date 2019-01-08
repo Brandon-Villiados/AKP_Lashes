@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import SubContent from '../body_components/SubContent.jsx';
 
 const MainWrapper = styled.div`
   grid-row: 2;
@@ -12,6 +13,13 @@ const MainWrapper = styled.div`
   h1, h5 {
     font-family: 'Quicksand', sans-serif;
   }
+`;
+
+const SubWrapper = styled.div`
+  grid-row: 3;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 `;
 
 const Header = styled.h5`
@@ -94,6 +102,9 @@ const MainContent = (props) => {
           <h5>Learn More</h5>
         </LearnBtn>
       </Section>
+      <SubWrapper>
+        <SubContent />
+      </SubWrapper>
     </MainWrapper>
   )
 }

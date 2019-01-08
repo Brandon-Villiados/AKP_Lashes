@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 const Drop = styled.form`
-  width: 8.2rem;
+  width: 9.5rem;
   height: 1.215rem;
   background-color: white;
   border-color: black;
@@ -24,11 +24,11 @@ export default class DropDown extends Component {
   render() {
     return(
       <Drop>
-        <Sel onChange={this.props.selectAppointment} name="appointments">
-          <option value="ClassicSet">Classic Set</option>
-          <option value="VolumeSet">Volume Set</option>
-          <option value="ClassicFill">Classic Fill</option>
-          <option value="VolumeFill">Volume Fill</option>
+        <Sel onChange={this.props.selectAppointmentType} name="appointments">
+          <option id="Classic-Set" value="1.5">Classic Set</option>
+          <option id="Volume-Set" value="1.75">Volume Set</option>
+          <option id="Classic-Fill" value="0.75">Classic Fill</option>
+          <option id="Volume-Fill" value="1">Volume Fill</option>
         </Sel>
       </Drop>
     )

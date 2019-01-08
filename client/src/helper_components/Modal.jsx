@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import moment from 'moment-timezone';
+import $ from 'jquery';
 
 const Modal = styled.div`
   position: absolute; 
   top: 25%;
   left: 50%;
   width: 80%;
-  height: 15%;
+  height: 18%;
   transform: translate(-50%, -50%);
   z-index: 9999;
   background: #ddd;
@@ -40,18 +42,23 @@ const ModTitle = styled.div`
   color: #222;
 `;
 
-const Form = styled.form`
+const ModContainer = styled.form`
   grid-column: 2 / 3;
   grid-row: 4 / 5;
+  margin-top: -0.5rem;
   justify-content: space-around;
 `;
 
 const Button = styled.button`
+  display: flex;
   width: 25%;
   height: 1rem;
   background-color: white;
   border-radius: 2px;
   border: solid thin;
+  text-align: center;
+  margin: 1.4em auto 0;
+  justify-content: center;
 `;
 
 const Input = styled.input`
@@ -64,9 +71,64 @@ const Input = styled.input`
   padding: 0 .5em;
 `
 
+const Err = styled.h5`
+  color: red;
+  text-align: center;
+  display: none;
+`
+
+const ThankContain = styled.div`
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  margin-top: 1rem;
+`
+
 export default class Mod extends Component {
   constructor(props){
     super(props)
+
+    this.renderMain = this.renderMain.bind(this);
+    this.renderModHeader = this.renderModHeader.bind(this);
+  }
+
+  renderMain(render) {
+    if (render) {
+      return (
+        <ModContainer>
+          <h5>{this.props.firsth5}</h5>  
+          <Input type="text" name="name" value={this.props.name} onChange={(e) => this.props.handleChange(e)}/>
+          <h5>{this.props.secondh5}</h5>
+          <Input type="text" name="email" value={this.props.email} onChange={(e) => this.props.handleChange(e)}/>
+          <h5>{this.props.thirdh5}</h5>
+          <Input type="text" name="emailTruth" value={this.props.emailTruth} onChange={(e) => this.props.handleChange(e)}/>
+          <Button onClick={this.props.postAppointment}>Submit</Button>
+          <Err className="hidden">Invalid Email</Err>
+        </ModContainer>
+      )
+    } else {
+      return (
+        <ModContainer>
+          <ThankContain>
+          <h2>Thank You for scheduling your AKPlash appointment!</h2>
+          <h3>Make sure you check your email to confirm your appointment</h3>
+          </ThankContain>
+        </ModContainer>
+      )
+    }
+  }
+
+  renderModHeader(render) {
+    if (render) {
+      return (
+        <ModHeader>
+          <ModTitle>
+            <h3>{this.props.title + ' ' + moment(this.props.startDate).tz('America/Los_Angeles').format('MMM Do') + ' at ' + this.props.startTime}</h3>
+          </ModTitle>
+        </ModHeader>
+      )
+    }
+    return;
   }
 
   render(){
@@ -74,20 +136,8 @@ export default class Mod extends Component {
       <div>
         <Overlay onClick={this.props.handleModal} />
         <Modal>
-          <ModHeader>
-            <ModTitle>
-              <h3>Schedule your Appointment</h3>
-            </ModTitle>
-          </ModHeader>
-          <Form>
-            <h5>Name</h5>  
-            <Input type="text" name="name" value={this.props.name} onChange={(e) => this.props.handleChange(e)}/>
-            <h5>Email</h5>
-            <Input type="text" name="email" value={this.props.email} onChange={(e) => this.props.handleChange(e)}/>
-            <br/>
-            <br/>
-            <Button>Submit</Button>
-          </Form>
+          {this.renderModHeader(this.props.render)}
+          {this.renderMain(this.props.render)}
         </Modal>
       </div>
     ) : null;

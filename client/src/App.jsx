@@ -21,21 +21,11 @@ const Container = styled.div`
   grid-template-rows: 12% 38% 50%;
   position: absolute;
   margin: auto;
+  background-color: #fdf7f9;
 
   @media (min-height: 812px) {
     height: 1930px;
   }
-`;
-
-const Wipedbg = styled.div`
-  grid-row: 3;
-  background-image: url('Logo_J_Pineapple.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
 `;
 
 export default class App extends Component {
@@ -47,7 +37,6 @@ export default class App extends Component {
     // this.previous = this.previous.bind(this); //code is in carousel for next and previous functions
   }
 
-
   render() {
     return (
       <Router>
@@ -57,9 +46,6 @@ export default class App extends Component {
           <Route path='/services' component={ComingSoon}/>
           <Route path='/portfolio' component={ComingSoon}/>
           <Route path='/book_online' component={BookForm}/>
-          <Wipedbg>
-            <SubContent/>
-          </Wipedbg>
         </Container>
       </Router>
     );

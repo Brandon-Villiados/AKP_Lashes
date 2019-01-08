@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
-import moment from 'moment';
+import 'moment-timezone/builds/moment-timezone-with-data-2012-2022';
+import moment from 'moment-timezone';
 import axios from 'axios';
 import AppointmentCards from '../helper_components/AppointmentCards.jsx';
 import '../../../node_modules/react-datepicker/dist/react-datepicker.css';
 import DropDown from '../helper_components/DropDown.jsx';
 import Modal from '../helper_components/Modal.jsx'
+import $ from 'jquery';
+import { 
+  convertDate, 
+  findAvailableTimes,
+  checkAvailableToday,
+  noneDisplayChosenApp } from '../helper_components/helpers.jsx'
 
 const BookWrap = styled.div`
   display: grid;
@@ -33,49 +40,100 @@ export default class BookForm extends Component {
     super(props);
     this.state = {
       startDate: moment(),
-      availability: ['8:30 AM'],
-      selectedAppType: 'ClassicSet',
-      selectedTime: '',
+      availabilitySource: ['08:30', '08:45', '09:00', '09:15', '09:30', '09:45', '10:00', '10:15', '10:30', '10:45', '11:00', '11:15', '11:30', '11:45', '12:30', '12:45', '13:00', '13:15', '13:30', '13:45', '14:00', '14:15', '14:30', '14:45', '15:00', '15:15', '15:30', '15:45', '16:00', '16:15', '16:30', '16:45', '17:00', '17:15', '17:30', '17:45', '18:00', '18:15', '18:30', '18:45', '19:00'],
+      availability: [],
+      selectedAppType: 'Classic_Set',
+      startTime: '',
+      appointmentLength: '1.5',
       modal: false,
+      thankYou: false,
       name: '',
-      email: ''
+      email: '',
+      emailTruth: ''
     };
 
     this.selectAppointmentType = this.selectAppointmentType.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.fetchAppointments = this.fetchAppointments.bind(this);
     this.handleModal = this.handleModal.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.postAppointment = this.postAppointment.bind(this);
   }
 
   componentDidMount() {
     axios.get(`/api/google/get?${this.state.startDate.format('YYYY-MM-DD')}`)
-    .then((res) => {
-      console.log(res.data);
+    .then(({ data }) => {
+      if (convertDate() >= 19) {
+        this.setState({
+          availability: []
+        })
+        return;
+      }
+      this.setState({availability: this.state.availabilitySource.slice(this.state.availabilitySource.indexOf(checkAvailableToday()))}, () => {
+        this.setState({availability: findAvailableTimes(data, this.state.availabilitySource, this.state.selectedAppType)});
+      });
     })
   }
 
-  handleChange(date) {
+  fetchAppointments(date) {
+    if (date < new Date()) {
+      this.setState({
+        availability: [],
+        startDate: date
+      })
+      return;
+    }
     this.setState({
       startDate: date
-    }, () => {
+    }, (e) => {
       axios.get(`/api/google/get?${this.state.startDate.format('YYYY-MM-DD')}`)
-      .then((res) => {
-        console.log(res.data);
+      .then(({ data }) => {
+        this.setState({availability: findAvailableTimes(data, this.state.availabilitySource, this.state.selectedAppType)})
       })
     })
   }
 
+  postAppointment(e) {
+    e.preventDefault()
+
+    if (this.state.emailTruth !== this.state.email) {
+      $('.hidden').css('display', 'block')
+      this.setState({
+        email: '',
+        emailTruth: ''
+      })
+    } else {
+      this.setState({
+        modal: false,
+        thankYou: true
+      })
+      axios.post('/api/google/post', this.state)
+      .then(res => {
+        noneDisplayChosenApp(this.state.availability.indexOf(this.state.startTime), this.state.selectedAppType)
+        .then(() => this.setState({
+          name: '',
+          email: '',
+          emailTruth: ''
+        }))
+      });
+    }
+  }
+
   selectAppointmentType(event) {
     this.setState({
-      selectedApp: event.target.value
+      selectedAppType: event.target.id,
+      appointmentLength: event.target.value
     }, () => console.log(this.state.selectedAppType))
   }
 
   handleModal(e) {
-    this.setState({
-      modal: !this.state.modal,
-      selectedTime: e.target.id
-    }, () => console.log(this.state))
+    if (this.state.thankYou) {
+      this.setState({thankYou: false, modal: false})
+    } else {
+      this.setState({
+        modal: !this.state.modal,
+        startTime: e.target.id
+      }, () => {console.log('modal handled')});
+    }
   }
 
   handleChange(e){
@@ -90,7 +148,7 @@ export default class BookForm extends Component {
         <PickerWrap>
           <DatePicker
             selected={this.state.startDate}
-            onChange={this.handleChange}
+            onChange={this.fetchAppointments}
             dateFormat="LL"
             timeCaption="time"
           />
@@ -106,7 +164,21 @@ export default class BookForm extends Component {
             handleModal={this.handleModal}
             name={this.state.name}
             email={this.state.email}
+            emailTruth={this.state.emailTruth}
+            postAppointment={this.postAppointment}
             handleChange={this.handleChange}
+            title={'Your AKPlash appointment will be for'}
+            firsth5={'Name'}
+            secondh5={'Email'}
+            thirdh5={'Retype Email'}
+            startDate={this.state.startDate}
+            startTime={this.state.startTime}
+            render={true}
+          />
+          <Modal 
+            handleModal={this.handleModal}
+            modal={this.state.thankYou}
+            render={false}
           />
         </AppointmentTimes>
       </BookWrap>
@@ -114,13 +186,3 @@ export default class BookForm extends Component {
   }
 
 }
-
-
-      // <form action="">
-      //   <label htmlFor="">First Name</label>
-      //   <input type="text" placeholder="Your name.."/>
-      //   <label htmlFor="">Last Name</label>
-      //   <input type="text" placeholder="Your name.."/>
-      //   <label htmlFor="">Email</label>
-      //   <input type="text" placeholder="Email.."/>
-      // </form>
