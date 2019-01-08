@@ -8,7 +8,7 @@ const {google} = require('googleapis');
 const mongoose = require('../database/index.js')
 const router = require('./router.js');
 const dotenv = require('dotenv').config();
-const PORT = 80;
+const PORT = 8080;
 const morgan = require('morgan');
 
 app.use(express.static(path.join(__dirname, '/../client/dist')));
