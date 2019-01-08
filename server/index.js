@@ -14,7 +14,7 @@ const morgan = require('morgan');
 app.use(express.static(path.join(__dirname, '/../client/dist')));
 app.use(bodyParser.json());
 // console.log(process.env.GOOGLE_TOKEN);
-app.use(morgan('default'));
+app.use(morgan('combined'));
 app.use(router);
 
 app.get('/', function (req, res) {
